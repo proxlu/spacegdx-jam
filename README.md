@@ -27,13 +27,3 @@ gradle run
 
 If you are going to build this project, I recommend creating a new project in gdx-setup and pasting
 Read this: https://libgdx.com/wiki/start/setup
-
----
-
-# ▶️  All videos in the series
-1. <https://www.youtube.com/watch?v=2bmvlwvnirk>
-2. <https://www.youtube.com/watch?v=2furs-8L1-8>
-3. <https://www.youtube.com/watch?v=5k-2TAy8JUA>
-4. <https://youtu.be/oYsA9PGCkQA>
-
----
