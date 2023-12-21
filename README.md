@@ -3,7 +3,7 @@
 
 ---
 
-# ☕ Game created for libgdx jam:
+# ☕ Game created for LibGDX Jam:
 ## <https://itch.io/jam/libgdx-jam-27/entries>
 
 ---
