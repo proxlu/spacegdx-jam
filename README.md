@@ -1,14 +1,14 @@
-# 🚀 SpaceShip
+# 🚀 SpaceGDX Jam
 > A basic game made with Java and [LibGDX](https://github.com/libgdx/libgdx).
 
 ---
 
-# ☕ This game was created in this Youtube series:
-## <https://cutt.ly/javagdx>
+# ☕ Game created for libgdx jam:
+## <https://itch.io/jam/libgdx-jam-27/entries>
 
 ---
 
-![SpaceShip](./assets/spaceship.jpg) 
+![SpaceShip](./assets/spacegdx.jpg) 
 
 ---
 
@@ -20,10 +20,13 @@
 
 # 🎮 How to play
 ```bash
-git clone https://github.com/terroo/spaceship
-cd spaceship
+git clone https://github.com/proxlu/spacegdx-jam
+cd spacegdx-jam
 gradle run
 ```
+
+If you are going to build this project, I recommend creating a new project in gdx-setup and pasting
+Read this: https://libgdx.com/wiki/start/setup
 
 ---
 
