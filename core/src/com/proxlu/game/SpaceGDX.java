@@ -89,16 +89,18 @@ public class SpaceGDX extends ApplicationAdapter {
         specialStartImage = new Texture("start.png");
         specialMiddleImage = new Texture("middle.png");
         specialEndImage = new Texture("end.png");
-        transparentImage = new Texture("transparent.png");
+        // transparentImage = new Texture("transparent.png");
 
     }
 
+    // Pausas, não usado por padrão
     public void sleep() {
         try {
             Thread.sleep(5);
         }catch(InterruptedException e){}
     }
 
+    // Função principal
     @Override
     public void render() {
         if (titleScreen) {
@@ -235,13 +237,11 @@ public class SpaceGDX extends ApplicationAdapter {
             specialSound.play();
             open = false;
 
-            // Adicione pontos com base no número de inimigos eliminados // Movido
-            // Volta ao normal
-
-        }else if(open && !Gdx.input.isKeyPressed(Input.Keys.X)){
         // Reseta a variável quando a tecla é solta
+        }else if(open && !Gdx.input.isKeyPressed(Input.Keys.X)){
             xPressed = false;
         }
+
         // Desenha os elementos do jogo
         if (!gameover && !paused) {
 
@@ -264,6 +264,7 @@ public class SpaceGDX extends ApplicationAdapter {
         batch.end();
     }
 
+    //
     @Override
     public void dispose() {
         batch.dispose();
@@ -276,9 +277,14 @@ public class SpaceGDX extends ApplicationAdapter {
         damageSound.dispose();
         specialSound.dispose();
         generator.dispose();
+        specialStartImage.dispose();
+        specialMiddleImage.dispose();
+        specialEndImage.dispose();
+        // transparentImage.dispose();
 
         }
 
+    // Chamado para reiniciar jogo após gameover
     private void restartGame() {
         gameover = false;
         score = 0;
@@ -286,11 +292,9 @@ public class SpaceGDX extends ApplicationAdapter {
         posX = 0;
         posY = (Gdx.graphics.getHeight() - nave.getHeight()) / 2;
         enemies.clear();
-        specialStartImage = new Texture("start.png");
-        specialMiddleImage = new Texture("middle.png");
-        specialEndImage = new Texture("end.png");
     }
 
+    // Lida com o movimento da nave
     private void moveNave(){
         float diagonalVelocity = velocity * Gdx.graphics.getDeltaTime() / 1.4f;
 
@@ -316,6 +320,7 @@ public class SpaceGDX extends ApplicationAdapter {
         }
     }
 
+    // Lida com o movimento do missil
     private void moveMissile(){
         if(Gdx.input.isKeyPressed(Input.Keys.Z) && !attack && !truncate) {
             attack = true;
@@ -338,6 +343,7 @@ public class SpaceGDX extends ApplicationAdapter {
         this.moveNave();
     }
 
+    // Lida com o spawn dos inimigos
     private void spawnEnemies() {
         int baseSpawnIntervalMillis = 1000;
         int spawn = random.nextInt(800 - 0 + 1) + 0;
@@ -355,42 +361,44 @@ public class SpaceGDX extends ApplicationAdapter {
         }
     }
 
+    // Lida com o movimento dos inimigos
     private void moveEnemies(){
         if (TimeUtils.nanoTime() - lastEnemyTime > numEnemies) {
             this.spawnEnemies();
         }
 
-    for (Iterator<Rectangle> iter = enemies.iterator(); iter.hasNext();) {
-        Rectangle enemy = iter.next();
-        enemy.x -= (200 + score) * Gdx.graphics.getDeltaTime();
+        for (Iterator<Rectangle> iter = enemies.iterator(); iter.hasNext();) {
+            Rectangle enemy = iter.next();
+            enemy.x -= (200 + score) * Gdx.graphics.getDeltaTime();
 
-        // Colisão com o míssil
-        if (collide(enemy.x, enemy.y, enemy.width, enemy.height, xMissile, yMissile, missile.getWidth(), missile.getHeight()) && attack) {
-            // Inimigo atingido, faça o que for necessário (pontuação, remoção do inimigo, etc.)
-            score++;
-            iter.remove();
-            attack = false;
-            damageSound.play(); // Toca o som de morte do inimigo
-        }
+            // Colisão com o míssil
+            if (collide(enemy.x, enemy.y, enemy.width, enemy.height, xMissile, yMissile, missile.getWidth(), missile.getHeight()) && attack) {
+                // Inimigo atingido, faça o que for necessário (pontuação, remoção do inimigo, etc.)
+                score++;
+                iter.remove();
+                attack = false;
+                damageSound.play(); // Toca o som de morte do inimigo
 
-        // Colisão com a nave
-        if (collide(enemy.x, enemy.y, enemy.width, enemy.height, posX, posY, nave.getWidth(), nave.getHeight()) && !gameover) {
-            --power;
-            damageSound.play(); // Toca o som de dano aos jogadores
-            iter.remove();
-        }
+            // Colisão com a nave
+            }else if(collide(enemy.x, enemy.y, enemy.width, enemy.height, posX, posY, nave.getWidth(), nave.getHeight()) && !gameover) {
+                --power;
+                damageSound.play(); // Toca o som de dano aos jogadores
+                iter.remove();
 
-        if(enemy.x + tEnemy.getWidth() < 75){
-            iter.remove();
-            --power;
-            damageSound.play(); // Toca o som de morte do inimigo
-        }
+            // Da dano ao chegar no fim do trajeto
+            }else if(enemy.x + tEnemy.getWidth() < 75){
+                --power;
+                damageSound.play(); // Toca o som de morte do inimigo
+                iter.remove();
+            }
+
             if (power < 0) {
                 gameover = true;
             }
         }
     }
 
+    // Checagem das bordas
     private boolean collide(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2){
         if( x1 + w1 > x2 && x1 < x2 + w2 && y1 + h1 > y2 && y1 < y2 + h2 ){
             return true;
