@@ -9,7 +9,7 @@ import com.badlogic.gdx.Files;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
+		config.setForegroundFPS(59);
 		config.setTitle("SpaceGDX Jam");
 		// config.addIcon("icons/ic_launcher_32.png", Files.FileType.Internal);
 
