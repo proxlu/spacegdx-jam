@@ -93,6 +93,12 @@ public class SpaceGDX extends ApplicationAdapter {
 
     }
 
+    public void sleep() {
+        try {
+            Thread.sleep(5);
+        }catch(InterruptedException e){}
+    }
+
     @Override
     public void render() {
         if (titleScreen) {
@@ -136,7 +142,6 @@ public class SpaceGDX extends ApplicationAdapter {
             if(TimeUtils.timeSinceMillis(specialStartTime) < 200){
                 if(specialStage == 1){
                     // System.out.println("1"); // Debug
-                    int enemiesCleared = enemies.size;
                     batch.begin();
                     batch.draw(specialStartImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
                     batch.end();
@@ -166,6 +171,7 @@ public class SpaceGDX extends ApplicationAdapter {
                     specialStage = 6;
                     // Adicione pontos com base no número de inimigos eliminados
                     damageSound.play(); // Toca o som de dano aos inimigos
+                    int enemiesCleared = enemies.size;
                     enemies.clear();
                     score += enemiesCleared;
                 }
