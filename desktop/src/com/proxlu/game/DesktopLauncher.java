@@ -14,6 +14,8 @@ public class DesktopLauncher {
 		// config.addIcon("icons/ic_launcher_32.png", Files.FileType.Internal);
 
                 config.setWindowedMode(1280, 720);
+		config.setResizable(false);
+		
 		new Lwjgl3Application(new SpaceGDX(), config);
 	}
 }
